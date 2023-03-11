@@ -58,11 +58,11 @@ def add_spaceship():
   request_data = request.get_json()   
   add_weight = request_data['maxweight']    
   add_captainid = request_data['captainid']
-  sql_captainid = "Select * from captain where id = %s"
+  sql_captainid = "Select * from captain where id = %s" 
   val1 = (add_captainid,)
   cursor.execute(sql_captainid,val1)
-  result = cursor.fetchone()
-  if result is None:
+  result = cursor.fetchone() 
+  if result is None: # If the id is not found
      return 'Captain Does not exist'
   sql = "INSERT INTO spaceship(maxweight, captainid) VALUES (%s, %s)"   #SQL Insert command
   val = (add_weight, add_captainid)                
@@ -81,7 +81,7 @@ def update_spaceship(id):
   val_spaceship = (id, )
   cursor.execute(sql_spaceshipid, val_spaceship)
   result_spaceship = cursor.fetchone()
-  if result_spaceship is None:
+  if result_spaceship is None: # If id is not found
      return 'Spaceship Does not exist'
 
   sql_captainid = "Select * from captain where id = %s"
@@ -109,7 +109,12 @@ def delete_spaceship(id):
 
 
 # View All Cargo
-
+@app.route('/cargo', methods=['GET'])
+def get_cargo():
+    sql = 'SELECT * from cargo'
+    get_cargo = execute_read_query(conn, sql)
+    cargo_list.append(get_cargo)
+    return jsonify(cargo_list) #Returns in JSON Format
 
 # Add Cargo
 @app.route('/cargo', methods=['POST'])
@@ -149,7 +154,8 @@ def update_cargo(cargoid):
    update_departure = request_data['departure']
    update_arrival = request_data['arrival']
    update_shipid = request_data['shipid']
-
+   
+   #To Check if Cargo exisits
    sql_cargo = "SELECT * FROM cargo WHERE id = %s"
    val_check = (cargoid,)
    cursor.execute(sql_cargo, val_check)
@@ -158,6 +164,7 @@ def update_cargo(cargoid):
    if result is None:
       return 'Cargo does not exist'
    
+   # To Check if Spaceship exists
    sql_spaceship = "Select * from spaceship where id = %s"
    val = (update_shipid,)
    cursor.execute(sql_spaceship,val)
@@ -169,7 +176,7 @@ def update_cargo(cargoid):
    if update_weight > spaceship_result['maxweight']:
       return 'Not enough room for the cargo'
 
-   sql_update = "Update cargo set weight = %s, cargotype = %s, departure = %s, arrival = %s, shipid = %s WHERE id = %s"
+   sql_update = "Update cargo set weight = %s, cargotype = %s, departure = %s, arrival = %s, shipid = %s WHERE id = %s" #SQL Update Command
 
    val_update = (update_weight,update_cargotype, str(update_departure), str(update_arrival), update_shipid, cargoid)
    cursor.execute(sql_update, val_update)
