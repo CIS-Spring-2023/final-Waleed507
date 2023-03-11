@@ -1,3 +1,6 @@
+# Waleed Yusuf
+# 2104654
+
 import flask
 from flask import jsonify
 from flask import request
@@ -106,12 +109,7 @@ def delete_spaceship(id):
 
 
 # View All Cargo
-@app.route('/cargo', methods=['GET'])
-def get_cargo():
-    sql = 'SELECT * from cargo'
-    get_cargo = execute_read_query(conn, sql)
-    cargo_list.append(get_cargo)
-    return jsonify(cargo_list)
+
 
 # Add Cargo
 @app.route('/cargo', methods=['POST'])
