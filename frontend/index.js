@@ -1,12 +1,3 @@
-// Waleed Yusuf
-// 2104654
-
-// Credit:
-//Class work/Templates
-// w3schools (JS + EJS Code)
-// https://stackoverflow.com/questions/6358673/javascript-checkbox-onchange (EJS Code)
-// https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector (EJS Code)
-
 //Packages
 const express = require("express");
 var path = require("path");
